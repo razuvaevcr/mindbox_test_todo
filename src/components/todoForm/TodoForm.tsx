@@ -20,6 +20,7 @@ const formSchema = z.object({
 	text: z.string().min(2, {
 		message: 'Todos must have at least 2 characters.',
 	}),
+	checked: z.boolean(),
 })
 
 export function TodoForm({
@@ -32,6 +33,7 @@ export function TodoForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			text: '',
+			checked: false
 		}
 	})
 
@@ -40,7 +42,10 @@ export function TodoForm({
 	}
 
 	useEffect(() => {
-		form.reset({ text: '' })
+		form.reset({
+			text: '' ,
+			checked: false
+		})
 	}, [form, form.formState.isSubmitSuccessful])
 
 	return (

@@ -8,18 +8,30 @@ export const columns: ColumnDef<TodoItem>[] = [
 		id: 'select',
 		header: ({ table }) => (
 			<Checkbox
+				className='block w-4'
 				checked={
 					table.getIsAllPageRowsSelected() ||
 					(table.getIsSomePageRowsSelected() && 'indeterminate')
 				}
-				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+				onCheckedChange={(value) => {
+					table.toggleAllPageRowsSelected(!!value);
+					table.getRowModel().rows.map(row => {
+						row.original.checked = !!value
+					})
+
+					
+				}}
 				aria-label='Select all'
 			/>
 		),
 		cell: ({ row }) => (
 			<Checkbox
+				className='block w-4 h-4 p-10px'
 				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
+				onCheckedChange={(value) => {
+					row.toggleSelected(!!value);
+					row.original.checked = !!value;
+				}}
 				aria-label='Select row'
 			/>
 		),
